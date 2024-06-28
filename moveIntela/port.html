@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jogo Divs</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: url(./grama.png)
+        }
+
+        .casa {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            background: url(./cassas.png);
+            background-size: cover;
+            background-position: center;
+        }
+
+        #personagem {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #mensagem {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 24px;
+            color: white;
+            background-color: black;
+            padding: 10px;
+            display: none;
+        }
+
+        .ganhou {
+          width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 120px;
+            left: 130px;
+            border-radius: 0 !important;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="personagem"></div>
+    <div class="ganhou"></div>
+    <div id="mensagem"></div>
+    <div class="casa"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var personagem = $("#personagem");
+            var mensagem = $("#mensagem");
+            var divsAleatorias = $(".div-aleatoria");
+            var ganhou = $(".ganhou");
+            var windowHeight = $(window).height();
+            var windowWidth = $(window).width();
+
+            // Função para gerar uma cor aleatória
+            function gerarCorAleatoria() {
+                var letras = "0123456789ABCDEF";
+                var cor = "#";
+                for (var i = 0; i < 6; i++) {
+                    cor += letras[Math.floor(Math.random() * 16)];
+                }
+                return cor;
+            }
+
+            // Verificar se o personagem passou por cima da div 'ganhou'
+            function verificarGanhou() {
+                var personagemPosicaoTop = personagem.offset().top;
+                var personagemPosicaoLeft = personagem.offset().left;
+                var ganhouPosicaoTop = ganhou.offset().top;
+                var ganhouPosicaoLeft = ganhou.offset().left;
+
+                if (
+                    personagemPosicaoTop < ganhouPosicaoTop + ganhou.height() &&
+                    personagemPosicaoTop + personagem.height() > ganhouPosicaoTop &&
+                    personagemPosicaoLeft < ganhouPosicaoLeft + ganhou.width() &&
+                    personagemPosicaoLeft + personagem.width() > ganhouPosicaoLeft
+                ) {
+                    mensagem.text("Achou");
+                    mensagem.fadeIn();
+                }
+                else {
+                    mensagem.text("");
+                }
+            }
+
+            // Controlar o movimento do personagem pelas setas do teclado
+            $(document).keydown(function(e) {
+                var personagemPosicaoTop = personagem.offset().top;
+                var personagemPosicaoLeft = personagem.offset().left;
+
+                switch (e.which) {
+                    case 37: // Seta para a esquerda
+                        if (personagemPosicaoLeft > 0) {
+                            personagem.css("left", "-=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 38: // Seta para cima
+                        if (personagemPosicaoTop > 0) {
+                            personagem.css("top", "-=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 39: // Seta para a direita
+                        if (personagemPosicaoLeft + personagem.width() < windowWidth) {
+                            personagem.css("left", "+=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 40: // Seta para baixo
+                        if (personagemPosicaoTop + personagem.height() < windowHeight) {
+                            personagem.css("top", "+=10");
+                        }
+                        verificarGanhou();
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

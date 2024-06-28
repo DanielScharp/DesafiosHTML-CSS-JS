@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jogo Divs</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #personagem {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .div-aleatoria {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: blue;
+            border-radius: 50%;
+        }
+
+
+        #mensagem {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 24px;
+            color: white;
+            background-color: black;
+            padding: 10px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="personagem"></div>
+    <div class="div-aleatoria ganhou"></div>
+    <div class="div-aleatoria"></div>
+    <div class="div-aleatoria"></div>
+    <div class="div-aleatoria"></div>
+    <div class="div-aleatoria"></div>
+    <div id="mensagem"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var personagem = $("#personagem");
+            var mensagem = $("#mensagem");
+            var divsAleatorias = $(".div-aleatoria");
+            var ganhou = $(".ganhou");
+            var windowHeight = $(window).height();
+            var windowWidth = $(window).width();
+
+            // Função para gerar uma cor aleatória
+            function gerarCorAleatoria() {
+                var letras = "0123456789ABCDEF";
+                var cor = "#";
+                for (var i = 0; i < 6; i++) {
+                    cor += letras[Math.floor(Math.random() * 16)];
+                }
+                return cor;
+            }
+
+            // Posicionar as divs aleatoriamente na tela
+            divsAleatorias.each(function() {
+                var posicaoTop = Math.random() * (windowHeight - $(this).height());
+                var posicaoLeft = Math.random() * (windowWidth - $(this).width());
+                $(this).css({
+                    top: posicaoTop,
+                    left: posicaoLeft,
+                    background: gerarCorAleatoria()
+                });
+            });
+
+            // Verificar se o personagem passou por cima da div 'ganhou'
+            function verificarGanhou() {
+                var personagemPosicaoTop = personagem.offset().top;
+                var personagemPosicaoLeft = personagem.offset().left;
+                var ganhouPosicaoTop = ganhou.offset().top;
+                var ganhouPosicaoLeft = ganhou.offset().left;
+
+                if (
+                    personagemPosicaoTop < ganhouPosicaoTop + ganhou.height() &&
+                    personagemPosicaoTop + personagem.height() > ganhouPosicaoTop &&
+                    personagemPosicaoLeft < ganhouPosicaoLeft + ganhou.width() &&
+                    personagemPosicaoLeft + personagem.width() > ganhouPosicaoLeft
+                ) {
+                    mensagem.text("Achou");
+                    mensagem.fadeIn();
+                }
+            }
+
+            // Controlar o movimento do personagem pelas setas do teclado
+            $(document).keydown(function(e) {
+                var personagemPosicaoTop = personagem.offset().top;
+                var personagemPosicaoLeft = personagem.offset().left;
+
+                switch (e.which) {
+                    case 37: // Seta para a esquerda
+                        if (personagemPosicaoLeft > 0) {
+                            personagem.css("left", "-=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 38: // Seta para cima
+                        if (personagemPosicaoTop > 0) {
+                            personagem.css("top", "-=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 39: // Seta para a direita
+                        if (personagemPosicaoLeft + personagem.width() < windowWidth) {
+                            personagem.css("left", "+=10");
+                        }
+                        verificarGanhou();
+                        break;
+                    case 40: // Seta para baixo
+                        if (personagemPosicaoTop + personagem.height() < windowHeight) {
+                            personagem.css("top", "+=10");
+                        }
+                        verificarGanhou();
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

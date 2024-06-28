@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Character Movement Script</title>
+    <style>
+
+        body {
+            background-color: rgb(166, 166, 172);
+        }
+
+        div#player {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 0, 0, 0.673);
+            border: 2px solid rgb(0, 0, 0);
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .teste {
+            animation: voar 1s linear alternate;
+        }
+
+        @keyframes voar {
+            0% {
+                background-color: aqua;
+            }
+            50% {
+                background-color: brown;
+            }
+            100% {
+                background-color: aqua;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+
+<div id="player"></div>
+
+<script>
+
+var horizontalAxisX = 0;
+var verticalAxisY = 0;
+var pixels = "px";
+
+window.addEventListener("keydown", playerMovement);
+
+function playerMovement() {
+    var player = window.document.getElementById("player");
+    var key = event.keyCode;
+    
+    if (key == 37) {
+        // tecla da esquerda
+        // Se o código da tecla pressionada for igual a 37 execute isso.
+        if(horizontalAxisX <= 0){
+            player.style.background = "#000";
+        } else {
+            player.style.background = "#00f";
+            horizontalAxisX += -10;
+            player.style.left = horizontalAxisX + pixels;
+
+        }
+    }
+
+    else if (key == 38) {
+        // tecla de cima
+        // Se o código da tecla pressionada for igual a 37 execute isso.
+        if(verticalAxisY <= 0){
+            player.style.background = "#ff0";
+        } else {
+            player.style.background = "#00f";
+            verticalAxisY += -10;
+            player.style.top = verticalAxisY + pixels;
+
+        }
+        
+    }
+
+    else if (key == 39) {
+        // tecla da direita
+        // Se o código da tecla pressionada for igual a 37 execute isso.
+        if(horizontalAxisX >= 200){
+            player.style.background = "#fff";
+        } else {
+            player.style.background = "#00f";
+            horizontalAxisX += 10;
+            player.style.left = horizontalAxisX + pixels;
+
+        }
+
+    }
+
+    else if (key == 40) {
+        // tecla de baixo
+        // Se o código da tecla pressionada for igual a 37 execute isso.
+        if(verticalAxisY >= 200){
+            player.style.background = "#f0f";
+        } else {
+            player.style.background = "#00f";
+            verticalAxisY += 10;
+            player.style.top = verticalAxisY + pixels;
+
+        }
+
+    }
+
+    if(verticalAxisY == 50 && horizontalAxisX == 50) {
+        player.style.background = "#0ff";
+        player.classList.toggle('teste')
+
+    }
+}
+
+</script>
+
+</body>
+</html>

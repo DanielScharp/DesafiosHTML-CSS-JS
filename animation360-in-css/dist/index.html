@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Sprite animation in CSS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<input type='radio' name='sprites' id='s1' hidden checked>
+<input type='radio' name='sprites' id='s2' hidden>
+<input type='radio' name='sprites' id='s3' hidden>
+<label for='s1'>360 Car</label>
+<label for='s2'>360 Mickey</label>
+<label for='s3'>Running Cat</label>
+
+<div class='sprites'>
+    <div class='sprite carSprite'><img src='https://vsync.s3.amazonaws.com/resources/360_page1_40_sprite_grey.jpg'></div>
+    <div class='sprite mickeySprite'><img src='https://vsync.s3.amazonaws.com/resources/mickey-sprite.png'></div>
+    <div class='sprite catSprite'><img src='https://vsync.s3.amazonaws.com/resources/tuna_sprite.png'></div>
+</div>
+<!-- partial -->
+  <script src='https://unpkg.com/@yaireo/knobs'></script><script  src="./script.js"></script>
+
+</body>
+</html>

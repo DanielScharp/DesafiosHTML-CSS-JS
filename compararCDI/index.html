@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparação de Rendimento Bancário</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Comparação de Rendimento entre Bancos Digitais</h1>
+        <form id="bankForm">
+            <label for="initialDeposit">Valor Inicial (R$):</label>
+            <input type="number" id="initialDeposit" step="0.01" required>
+            <label for="monthlyDeposit">Depósito Mensal (R$):</label>
+            <input type="number" id="monthlyDeposit" step="0.01" required>
+            <label for="bankName">Nome do Banco:</label>
+            <input type="text" id="bankName" required>
+            <label for="cdiRate">Taxa CDI (%):</label>
+            <input type="number" id="cdiRate" step="0.01" required>
+            <button type="submit">Adicionar Banco</button>
+        </form>
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
